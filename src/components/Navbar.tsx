@@ -4,7 +4,7 @@ import logo from '../assets/images/chilldev-logo.png'
 export const Navbar = () => {
   return (
     <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar">
             <div className="container">
                 <Link className="logo" to="/"><img src={logo} alt="logo" width={100} height={150} /></Link>
                 <div className="text-center">
@@ -13,13 +13,13 @@ export const Navbar = () => {
                 </div>
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <Link to="/">Home</Link>
+                        <Link to="/">Accueil</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/login">Login</Link>
+                        <Link to="/login">Connexion</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/register">Register</Link>
+                        <Link to="/register">Inscription</Link>
                     </li>
                 </ul>
             </div>
