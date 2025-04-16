@@ -5,9 +5,9 @@ import { Footer } from './components/Footer'
 function App() {
 
   return (
-      <div className="min-h-screen bg-gray-100">
+      <div>
         <Navbar />
-        <main className="container mx-auto px-4 py-8">
+        <main>
           <Outlet />
         </main>
         <Footer />

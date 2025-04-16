@@ -1,3 +1,21 @@
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-image: url('./assets/images/bg-img.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+#root {
+  max-width: 75%;
+  margin: 0 auto;
+  margin-top: 3rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  min-height: 100vh;
+}
+
 /* NAVBAR */
 .navbar {
     background-image: linear-gradient(to right, lightblue, lightgreen);
