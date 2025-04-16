@@ -4,33 +4,32 @@ export const Footer = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-4">
-            <h5>About Us</h5>
+            <h5>À propos de nous</h5>
             <p>
-              We are a team of developers who are passionate about creating
-              high-quality software.
+              Nous sommes un groupe d'étudiants de Learn IT Brest.
             </p>
           </div>
           <div className="col-md-4">
-            <h5>Contact Us</h5>
+            <h5>Contactez-nous</h5>
             <p>
-              Email: <a href="mailto:contact@example.com">contact@example.com</a>
+              Email: <a href="mailto:contact@example.com">contact@brest-opencampus.fr</a>
             </p>
             <p>
-              Phone: <a href="tel:+1234567890">+123-456-7890</a>
+              Phone: <a href="tel:+1234567890">02.98.49.22.99</a>
             </p>
           </div>
           <div className="col-md-4">
-            <h5>Follow Us</h5>
+            <h5>Suivez-nous</h5>
             <ul className="list-unstyled">
-              <li><a href="https://www.facebook.com/yourpage">Facebook</a></li>
-              <li><a href="https://www.twitter.com/yourpage">Twitter</a></li>
-              <li><a href="https://www.instagram.com/yourpage">Instagram</a></li>
+              <li><a href="https://reseau-opencampus.com/open-campus-brest/">Site officiel</a></li>
+              <li><a href="https://www.facebook.com/opencampus.off/?locale=fr_FR">Facebook</a></li>
+              <li><a href="https://www.instagram.com/opencampus_off/">Instagram</a></li>
             </ul>
           </div>
         </div>
       </div>
       <div className="text-center mt-4">
-        <p>&copy; {new Date().getFullYear()} ChillDev. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} ChillDev Learn IT. Tous droits réservés.</p>
       </div>
     </footer>
   )
