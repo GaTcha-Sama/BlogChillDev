@@ -1,0 +1,132 @@
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-image: url('./assets/images/bg-img.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+#root {
+  max-width: 75%;
+  margin: 0 auto;
+  margin-top: 3rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  min-height: 100vh;
+}
+
+/* NAVBAR */
+.navbar {
+    background-image: linear-gradient(to right, lightblue, lightgreen);
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    display: block;
+    transition: transform 0.2s;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.text-center {
+    flex: 1;
+    margin: 0 2rem;
+}
+
+.text-center h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.text-center h5 {
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+}
+
+.navbar-nav {
+    display: flex;
+    flex-direction: row !important;
+    gap: 2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: auto;
+}
+
+.nav-item {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 0.5rem;
+    transition: color 0.2s;
+    white-space: nowrap;
+}
+
+.nav-item a:hover {
+    color: #007bff;
+}
+
+/* FOOTER */
+.footer {
+  background-image: linear-gradient(to right, lightblue, lightgreen);
+  padding: 2rem 0;
+  margin-top: 3rem;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  gap: 4rem;
+  margin-bottom: 2rem;
+}
+
+.footer-section {
+  text-align: center;
+}
+
+.footer-section h3 {
+  color: white;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.footer-section p, 
+.footer-section a {
+  color: white;
+  text-decoration: none;
+  margin: 0.5rem 0;
+  display: block;
+}
+
+.footer-section a:hover {
+  text-decoration: underline;
+}
+
+.copyrights {
+  text-align: center;
+  color: black;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+
+
