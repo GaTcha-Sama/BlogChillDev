@@ -23,5 +23,43 @@ dist-ssr
 *.sln
 *.sw?
 
-node_modules
+# Django
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+venv/
+ENV/
+.venv
+
+# SQLite
+*.sqlite3
+*.db
+
+# Media files
+media/
+
+# Static files
+staticfiles/
