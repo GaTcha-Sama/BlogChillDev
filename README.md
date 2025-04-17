@@ -164,4 +164,6 @@ Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
 
 ## Contributeurs
 
-- Yanis - Développeur principal
+- Yanis - Lead Dev
+- Jérémy - Dev
+- Thomas - Dev
