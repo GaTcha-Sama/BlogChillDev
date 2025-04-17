@@ -12,6 +12,14 @@ BlogChillDev est une application full-stack composée d'un frontend React avec T
 - Commentaires sur les articles
 - Réactions par emoji (👍, ❤️, 😂)
 
+## Structure du projet
+
+Ce dépôt est un monorepo contenant à la fois:
+- Le frontend React/TypeScript à la racine
+- Le backend Django dans le dossier `django_backend/`
+
+Cette structure facilite le développement et le déploiement de l'application complète.
+
 ## Technologies utilisées
 
 ### Frontend
@@ -35,15 +43,17 @@ BlogChillDev est une application full-stack composée d'un frontend React avec T
 - Python (v3.9+)
 - npm ou yarn
 
-### Installation du frontend
+### Installation
 
 ```bash
 # Cloner le projet
-git clone <url-du-repo>
+git clone https://github.com/GaTcha-Sama/BlogChillDev.git
+cd BlogChillDev
+```
 
-# Accéder au répertoire du frontend
-cd BlogChillDev-main
+### Configuration du Frontend
 
+```bash
 # Installer les dépendances
 npm install
 
@@ -51,7 +61,9 @@ npm install
 npm run dev
 ```
 
-### Installation du backend
+Le frontend sera accessible à l'adresse: http://localhost:5173
+
+### Configuration du Backend
 
 ```bash
 # Accéder au répertoire du backend
@@ -69,7 +81,7 @@ source venv/bin/activate
 # Installer les dépendances
 pip install -r requirements.txt
 
-# Appliquer les migrations
+# Appliquer les migrations (si nécessaire)
 python manage.py migrate
 
 # Créer un superutilisateur (administrateur)
@@ -78,6 +90,9 @@ python manage.py createsuperuser
 # Démarrer le serveur
 python manage.py runserver
 ```
+
+Le backend sera accessible à l'adresse: http://localhost:8000/api
+L'interface d'administration: http://localhost:8000/admin
 
 ## Configuration
 
@@ -92,32 +107,7 @@ Par défaut, l'API est configurée pour être accessible à l'adresse `http://lo
 Le backend est configuré pour accepter les requêtes depuis:
 - `http://localhost:3000` (React Create React App)
 - `http://localhost:5173` (Vite)
-
-Si vous utilisez un port différent, assurez-vous de l'ajouter à la liste `CORS_ALLOWED_ORIGINS` dans le fichier `settings.py` du backend.
-
-## Structure du projet
-
-### Frontend
-
-```
-src/
-├── api/            # Configuration d'Axios et URL de l'API
-├── components/     # Composants réutilisables
-├── pages/          # Pages principales de l'application
-├── services/       # Services pour les appels API
-├── App.tsx         # Composant principal de l'application
-└── Router.tsx      # Configuration des routes
-```
-
-### Backend
-
-```
-django_backend/
-├── blog_api/       # Configuration principale de Django
-├── users/          # Gestion des utilisateurs
-├── posts/          # Gestion des articles et commentaires
-└── manage.py       # Script de gestion Django
-```
+- `http://127.0.0.1:5173` (Vite alternative)
 
 ## Fonctionnalités principales
 
@@ -154,6 +144,19 @@ django_backend/
 - `POST /api/posts/{id}/toggle_emoji/` - Ajouter/retirer un emoji
 - `GET /api/posts/{id}/comments/` - Liste des commentaires
 - `POST /api/posts/{id}/add_comment/` - Ajouter un commentaire
+
+## Dépannage
+
+### Problèmes CORS
+Si vous rencontrez des problèmes CORS, vérifiez que:
+1. Le backend Django est bien en cours d'exécution
+2. Les origines correctes sont configurées dans `django_backend/blog_api/settings.py`
+3. Le frontend utilise la bonne URL API dans `src/api/config.ts`
+
+### Problèmes d'authentification
+Si vous ne pouvez pas créer d'articles en tant qu'administrateur:
+1. Vérifiez que l'utilisateur a bien le statut d'administrateur dans l'admin Django
+2. Assurez-vous que le token JWT est bien inclus dans les requêtes API
 
 ## Licence
 
