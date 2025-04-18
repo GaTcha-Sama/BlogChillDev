@@ -3,29 +3,18 @@ import { Home } from './pages/Home'
 import { Login } from './pages/Login'
 import { Error } from './pages/Error'
 import App from './App'
-import { useState, useEffect } from 'react'
-import { authService } from './services/authService'
 import { Register } from './pages/Register'
 import { PostDetail } from './pages/PostDetail'
 import { CreatePost } from './pages/CreatePost'
+import { useAuth } from './context/AuthContext'
+
+// Composant pour routes protégées (admin seulement)
+const AdminRoute = ({ element }) => {
+    const { role } = useAuth();
+    return role === 'admin' ? element : <Navigate to="/login" />;
+};
 
 export const Router = () => {
-    const [currentUser, setCurrentUser] = useState(null);
-    const [loading, setLoading] = useState(true);
-    
-    useEffect(() => {
-        const user = authService.getCurrentUser();
-        if (user) {
-            setCurrentUser(user);
-        }
-        setLoading(false);
-    }, []);
-    
-    // Composant pour routes protégées (admin seulement)
-    const AdminRoute = ({ element }) => {
-        return currentUser && currentUser.is_admin ? element : <Navigate to="/login" />;
-    };
-
     const router = createBrowserRouter([
         {
             path: '/',

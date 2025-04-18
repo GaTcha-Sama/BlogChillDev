@@ -14,7 +14,7 @@ export const CreatePost = () => {
 
   useEffect(() => {
     const currentUser = authService.getCurrentUser();
-    if (!currentUser || !currentUser.is_admin) {
+    if (!currentUser || currentUser.role !== 'admin') {
       navigate('/');
       return;
     }
@@ -100,19 +100,13 @@ export const CreatePost = () => {
           </Form.Text>
         </Form.Group>
         
-        <div className="d-flex gap-2">
-          <Button variant="primary" type="submit" disabled={loading}>
-            {loading ? (
-              <>
-                <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                Publication en cours...
-              </>
-            ) : 'Publier'}
-          </Button>
-          <Button variant="outline-secondary" onClick={() => navigate('/')}>
-            Annuler
-          </Button>
-        </div>
+        <Button 
+          variant="primary" 
+          type="submit" 
+          disabled={loading}
+        >
+          {loading ? 'Création en cours...' : 'Créer l\'article'}
+        </Button>
       </Form>
     </Container>
   );

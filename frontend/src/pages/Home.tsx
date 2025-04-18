@@ -42,13 +42,14 @@ export const Home = () => {
 
   return (
     <Container className="py-4">
-      <h1 className="mb-4">Articles récents</h1>
-      
-      {currentUser && currentUser.is_admin && (
-        <Button as={Link} to="/create-post" variant="primary" className="mb-4">
-          Créer un nouvel article
-        </Button>
-      )}
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h1>Articles récents</h1>
+        {currentUser && currentUser.role === 'admin' && (
+          <Button as={Link} to="/create-post" variant="primary" size="lg">
+            Créer un nouvel article
+          </Button>
+        )}
+      </div>
       
       {posts.length === 0 ? (
         <div className="alert alert-info">Aucun article disponible.</div>
