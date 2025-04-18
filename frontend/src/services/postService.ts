@@ -27,10 +27,20 @@ export const postService = {
   },
   
   toggleEmoji: async (postId, emojiType) => {
+    // Convertir l'emoji Unicode en type d'emoji attendu par le backend
+    const emojiMap = {
+      '👍': 'like',
+      '❤️': 'love',
+      '😂': 'laugh',
+      '😮': 'wow',
+      '😢': 'sad',
+      '😡': 'angry'
+    };
+    
+    const emojiTypeStr = emojiMap[emojiType] || emojiType;
+    
     const response = await api.post(`/posts/${postId}/toggle_emoji/`, { 
-      emoji_type: emojiType,
-      post: parseInt(postId),
-      type: emojiType.toString()
+      emoji_type: emojiTypeStr
     });
     return response.data;
   }

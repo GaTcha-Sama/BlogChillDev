@@ -1,54 +1,66 @@
 import { api } from '../api/config';
 
+// Créer un événement personnalisé pour les changements d'authentification
+const createAuthEvent = () => {
+  const event = new Event('authChange');
+  window.dispatchEvent(event);
+};
+
 export const authService = {
   login: async (username, password) => {
-    const response = await api.post('/token/', { username, password });
-    if (response.data.access) {
-      // Enregistrer temporairement le token
-      localStorage.setItem('user', JSON.stringify({
-        ...response.data,
-        username
-      }));
-      
-      // Récupérer les détails utilisateur
-      const userDetails = await authService.getCurrentUserDetails(response.data.access);
-      
-      // Détecter si l'utilisateur est admin (soit par username, soit par d'autres attributs)
-      const isAdmin = username.toLowerCase() === 'admin' || 
-                     userDetails.is_staff === true || 
-                     userDetails.is_superuser === true ||
-                     userDetails.is_admin === true;
-      
-      // Créer un objet utilisateur complet avec toutes les informations
-      const userWithDetails = {
-        ...response.data,
-        ...userDetails,
-        is_admin: isAdmin, // Ajouter explicitement ce champ
-        username: username // Garantir que le nom d'utilisateur est inclus
-      };
-      
-      // Stocker l'objet utilisateur complet
-      localStorage.setItem('user', JSON.stringify(userWithDetails));
-      return userWithDetails;
+    try {
+      const response = await api.post('/token/', { username, password });
+      if (response.data.access) {
+        const userDetails = await authService.getCurrentUserDetails(response.data.access);
+        
+        const role = userDetails.is_staff === true ? 'admin' : 'user';
+        
+        const userWithDetails = {
+          ...response.data,
+          ...userDetails,
+          role: role,
+          username: username
+        };
+        
+        localStorage.setItem('user', JSON.stringify(userWithDetails));
+        createAuthEvent(); // Déclencher l'événement après la connexion
+        return userWithDetails;
+      }
+      return response.data;
+    } catch (error) {
+      console.error('Erreur lors de la connexion:', error);
+      throw error;
     }
-    return response.data;
   },
   
   logout: () => {
     localStorage.removeItem('user');
+    delete api.defaults.headers.common['Authorization'];
+    createAuthEvent(); // Déclencher l'événement après la déconnexion
   },
   
   register: async (username, email, password) => {
-    return api.post('/users/', {
-      username,
-      email,
-      password,
-      password2: password // Le backend attend ce champ
-    });
+    try {
+      return await api.post('/users/', {
+        username,
+        email,
+        password,
+        password2: password
+      });
+    } catch (error) {
+      console.error('Erreur lors de l\'inscription:', error);
+      throw error;
+    }
   },
   
   getCurrentUser: () => {
-    return JSON.parse(localStorage.getItem('user'));
+    try {
+      const userStr = localStorage.getItem('user');
+      return userStr ? JSON.parse(userStr) : null;
+    } catch (error) {
+      console.error('Erreur lors de la récupération de l\'utilisateur:', error);
+      return null;
+    }
   },
   
   getCurrentUserDetails: async (token) => {
@@ -60,7 +72,7 @@ export const authService = {
       });
       return response.data;
     } catch (error) {
-      console.error('Erreur lors de la récupération des détails utilisateur', error);
+      console.error('Erreur lors de la récupération des détails utilisateur:', error);
       return {};
     }
   },

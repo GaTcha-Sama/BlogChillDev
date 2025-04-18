@@ -18,6 +18,26 @@ export const PostDetail = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  // Map pour convertir les types d'emoji en caractères Unicode
+  const emojiMap = {
+    'like': '👍',
+    'love': '❤️',
+    'laugh': '😂',
+    'wow': '😮',
+    'sad': '😢',
+    'angry': '😡'
+  };
+
+  // Map pour convertir les caractères Unicode en types d'emoji
+  const emojiTypeMap = {
+    '👍': 'like',
+    '❤️': 'love',
+    '😂': 'laugh',
+    '😮': 'wow',
+    '😢': 'sad',
+    '😡': 'angry'
+  };
+
   useEffect(() => {
     const fetchPostDetails = async () => {
       try {
@@ -133,25 +153,25 @@ export const PostDetail = () => {
           {/* Réactions emoji */}
           <div className="d-flex gap-2 my-3">
             <Button 
-              variant={post.emojis?.some(e => e.emoji_type === '👍' && e.user === currentUser?.id) ? "primary" : "outline-primary"} 
+              variant={post.user_reactions?.includes('like') ? "primary" : "outline-primary"} 
               onClick={() => handleEmojiToggle('👍')}
               disabled={!currentUser}
             >
-              👍 {post.emojis?.filter(e => e.emoji_type === '👍').length || 0}
+              👍 {post.emoji_counts?.find(e => e.emoji_type === 'like')?.count || 0}
             </Button>
             <Button 
-              variant={post.emojis?.some(e => e.emoji_type === '❤️' && e.user === currentUser?.id) ? "danger" : "outline-danger"} 
+              variant={post.user_reactions?.includes('love') ? "danger" : "outline-danger"} 
               onClick={() => handleEmojiToggle('❤️')}
               disabled={!currentUser}
             >
-              ❤️ {post.emojis?.filter(e => e.emoji_type === '❤️').length || 0}
+              ❤️ {post.emoji_counts?.find(e => e.emoji_type === 'love')?.count || 0}
             </Button>
             <Button 
-              variant={post.emojis?.some(e => e.emoji_type === '😂' && e.user === currentUser?.id) ? "warning" : "outline-warning"} 
+              variant={post.user_reactions?.includes('laugh') ? "warning" : "outline-warning"} 
               onClick={() => handleEmojiToggle('😂')}
               disabled={!currentUser}
             >
-              😂 {post.emojis?.filter(e => e.emoji_type === '😂').length || 0}
+              😂 {post.emoji_counts?.find(e => e.emoji_type === 'laugh')?.count || 0}
             </Button>
           </div>
         </Card.Body>
