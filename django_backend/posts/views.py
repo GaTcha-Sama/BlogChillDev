@@ -9,7 +9,7 @@ class IsAdminOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
             return True
-        return request.user.is_authenticated and request.user.is_admin
+        return request.user.is_authenticated and request.user.is_staff
 
 class CommentPagination(PageNumberPagination):
     page_size = 5
@@ -55,7 +55,8 @@ class PostViewSet(viewsets.ModelViewSet):
         if request.method == 'DELETE' or existing_emoji:
             if existing_emoji:
                 existing_emoji.delete()
-                return Response(status=status.HTTP_204_NO_CONTENT)
+                post_serializer = PostSerializer(post, context={'request': request})
+                return Response(post_serializer.data, status=status.HTTP_200_OK)
             return Response({"error": "Emoji not found"}, status=status.HTTP_404_NOT_FOUND)
         
         serializer = EmojiSerializer(data={'emoji_type': emoji_type, 'post': post.id})
