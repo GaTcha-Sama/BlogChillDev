@@ -16,6 +16,10 @@ BlogChillDev est une application full-stack composée d'un frontend React avec T
 
 Lien : https://whimsical.com/projet-blog-Apu8mtQfMtgMyS9ptKY1k9
 
+## MCD
+
+Diagram : https://dbdiagram.io/d/67bed6ee263d6cf9a0813a5b
+
 ## Structure du projet
 
 Ce dépôt est un monorepo contenant à la fois:
