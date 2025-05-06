@@ -63,3 +63,4 @@ media/
 
 # Static files
 staticfiles/
+node_modules/
