@@ -1,30 +1,26 @@
 import { useState } from 'react'
 import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
-import { authService } from '../services/authService'
+import { useAuth } from '../context/AuthContext'
 
 export const Login = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  
-  const navigate = useNavigate();
-  
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    setLoading(true);
     setError('');
-    
+    setLoading(true);
+
     try {
-      await authService.login(username, password);
+      await login(username, password);
       navigate('/');
-    } catch (err) {
-      setError(
-        err.response?.data?.detail || 
-        'Une erreur est survenue lors de la connexion'
-      );
+    } catch (error) {
+      setError('Identifiants incorrects');
       setLoading(false);
     }
   };
@@ -66,7 +62,7 @@ export const Login = () => {
                   <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                   Connexion en cours...
                 </>
-              ) : 'Connexion'}
+              ) : 'Se connecter'}
             </Button>
             <div className="mt-3">
               <Link to="/register">Vous n'avez pas de compte ? Inscrivez-vous</Link>
