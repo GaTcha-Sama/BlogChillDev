@@ -61,7 +61,7 @@ export const Home = () => {
                 <Card.Body>
                   <Card.Title>{post.title}</Card.Title>
                   <Card.Subtitle className="mb-2 text-muted">
-                    Par {post.author?.username} - {new Date(post.created_at).toLocaleDateString()}
+                    Par <Link to={`/users/${post.author?.id}`}>{post.author?.username}</Link> - {new Date(post.created_at).toLocaleDateString()}
                   </Card.Subtitle>
                   <Card.Text style={{ whiteSpace: 'pre-line' }}>
                     {truncateContent(post.content)}

@@ -7,6 +7,7 @@ import { Register } from './pages/Register'
 import { PostDetail } from './pages/PostDetail'
 import { CreatePost } from './pages/CreatePost'
 import { useAuth } from './context/AuthContext'
+import UserDetail from './pages/UserDetail'
 
 // Composant pour routes protégées (admin seulement)
 const AdminRoute = ({ element }) => {
@@ -39,6 +40,10 @@ export const Router = () => {
                 {
                     path: '/create-post',
                     element: <AdminRoute element={<CreatePost />} />,
+                },
+                {
+                    path: '/users/:id',
+                    element: <UserDetail />,
                 },
                 {
                     path: '*',
