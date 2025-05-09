@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Card, Button, Form, Alert, Badge } from 'react-bootstrap';
+import { Container, Card, Button, Form, Alert, Badge, Pagination } from 'react-bootstrap';
 import { postService } from '../services/postService';
 import { authService } from '../services/authService';
 
@@ -225,16 +225,35 @@ export const PostDetail = () => {
           {/* Pagination */}
           {totalPages > 1 && (
             <div className="d-flex justify-content-center my-4">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                <Button
-                  key={page}
-                  variant={currentPage === page ? 'primary' : 'outline-primary'}
-                  onClick={() => loadMoreComments(page)}
-                  className="mx-1"
-                >
-                  {page}
-                </Button>
-              ))}
+              <Pagination>
+                <Pagination.First 
+                  onClick={() => loadMoreComments(1)} 
+                  disabled={currentPage === 1}
+                />
+                <Pagination.Prev 
+                  onClick={() => loadMoreComments(currentPage - 1)} 
+                  disabled={currentPage === 1}
+                />
+                
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                  <Pagination.Item
+                    key={page}
+                    active={currentPage === page}
+                    onClick={() => loadMoreComments(page)}
+                  >
+                    {page}
+                  </Pagination.Item>
+                ))}
+                
+                <Pagination.Next 
+                  onClick={() => loadMoreComments(currentPage + 1)} 
+                  disabled={currentPage === totalPages}
+                />
+                <Pagination.Last 
+                  onClick={() => loadMoreComments(totalPages)} 
+                  disabled={currentPage === totalPages}
+                />
+              </Pagination>
             </div>
           )}
         </>

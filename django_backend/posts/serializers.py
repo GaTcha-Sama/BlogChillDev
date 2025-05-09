@@ -30,13 +30,30 @@ class EmojiCountSerializer(serializers.Serializer):
 
 class PostSerializer(serializers.ModelSerializer):
     author = UserSerializer(read_only=True)
-    comments = CommentSerializer(many=True, read_only=True)
+    comments = serializers.SerializerMethodField()
     emoji_counts = serializers.SerializerMethodField()
     user_reactions = serializers.SerializerMethodField()
+    total_comments = serializers.SerializerMethodField()
     
     class Meta:
         model = Post
-        fields = ['id', 'title', 'content', 'created_at', 'author', 'comments', 'emoji_counts', 'user_reactions']
+        fields = ['id', 'title', 'content', 'created_at', 'author', 'comments', 'emoji_counts', 'user_reactions', 'total_comments']
+    
+    def get_comments(self, obj):
+        request = self.context.get('request')
+        comments = obj.comments.all().order_by('-created_at')
+        
+        # Si on est sur la page d'accueil, on limite à 5 commentaires
+        if request and request.resolver_match.url_name == 'post-list':
+            page = int(request.query_params.get('comment_page', 1))
+            start = (page - 1) * 5
+            end = start + 5
+            comments = list(comments)[start:end]
+            
+        return CommentSerializer(comments, many=True).data
+    
+    def get_total_comments(self, obj):
+        return obj.comments.count()
     
     def get_emoji_counts(self, obj):
         emoji_counts = Emoji.objects.filter(post=obj).values('emoji_type').annotate(count=Count('emoji_type'))
