@@ -83,8 +83,9 @@ export const PostDetail = () => {
     }
   };
 
-  const handleEmojiToggle = async (emojiType) => {
+  const handleEmojiToggle = async (emojiUnicode) => {
     try {
+      const emojiType = emojiTypeMap[emojiUnicode];
       const updatedPost = await postService.toggleEmoji(id, emojiType);
       setPost(updatedPost);
     } catch (error) {

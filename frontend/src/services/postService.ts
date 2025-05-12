@@ -2,6 +2,17 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:8000/api';
 
+const getAuthHeader = () => {
+  const userStr = localStorage.getItem('user');
+  if (userStr) {
+    const user = JSON.parse(userStr);
+    return {
+      'Authorization': `Bearer ${user.access}`
+    };
+  }
+  return {};
+};
+
 export const postService = {
   getAllPosts: async (params = '') => {
     const response = await axios.get(`${API_URL}/posts/${params ? `?${params}` : ''}`);
@@ -15,27 +26,21 @@ export const postService = {
   
   createPost: async (postData) => {
     const response = await axios.post(`${API_URL}/posts/`, postData, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
+      headers: getAuthHeader()
     });
     return response.data;
   },
   
   updatePost: async (id, postData) => {
     const response = await axios.put(`${API_URL}/posts/${id}/`, postData, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
+      headers: getAuthHeader()
     });
     return response.data;
   },
   
   deletePost: async (id) => {
     const response = await axios.delete(`${API_URL}/posts/${id}/`, {
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      }
+      headers: getAuthHeader()
     });
     return response.data;
   },
@@ -49,9 +54,7 @@ export const postService = {
     const response = await axios.post(`${API_URL}/posts/${postId}/add_comment/`, 
       { content },
       {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
+        headers: getAuthHeader()
       }
     );
     return response.data;
@@ -61,9 +64,7 @@ export const postService = {
     const response = await axios.post(`${API_URL}/posts/${postId}/toggle_emoji/`, 
       { emoji_type: emojiType },
       {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
+        headers: getAuthHeader()
       }
     );
     return response.data;
