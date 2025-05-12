@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Card, Button, Form, Alert, Badge, Pagination } from 'react-bootstrap';
 import { postService } from '../services/postService';
 import { authService } from '../services/authService';
+import { Link } from 'react-router-dom';
 
 export const PostDetail = () => {
   const { id } = useParams();
@@ -144,7 +145,7 @@ export const PostDetail = () => {
         <Card.Body>
           <Card.Title as="h1">{post.title}</Card.Title>
           <Card.Subtitle className="mb-3 text-muted">
-            Par {post.author?.username} - {new Date(post.created_at).toLocaleDateString()}
+            Par <Link to={`/users/${post.author?.id}`}>{post.author?.username}</Link> - {new Date(post.created_at).toLocaleDateString()}
           </Card.Subtitle>
           <Card.Text style={{ whiteSpace: 'pre-line' }}>
             {post.content}
@@ -214,7 +215,7 @@ export const PostDetail = () => {
             <Card key={comment.id} className="mb-3">
               <Card.Body>
                 <div className="d-flex justify-content-between align-items-center mb-2">
-                  <strong>{comment.author?.username || 'Utilisateur'}</strong>
+                  <strong><Link to={`/users/${comment.author?.id}`}>{comment.author?.username || 'Utilisateur'}</Link></strong>
                   <small className="text-muted">{new Date(comment.created_at).toLocaleString()}</small>
                 </div>
                 <Card.Text>{comment.content}</Card.Text>

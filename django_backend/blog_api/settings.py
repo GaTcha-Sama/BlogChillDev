@@ -33,7 +33,7 @@ MIDDLEWARE = [
     'blog_api.middleware.CompatibilityMiddleware',  # Notre middleware de compatibilité
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # CORS middleware doit être avant CommonMiddleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -142,12 +142,9 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=7),
 }
 
-# CORS Settings
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # React (Create React App)
-    "http://localhost:5173",  # Vite
-    "http://127.0.0.1:5173",  # Vite alternative
-]
+# Configuration CORS
+CORS_ALLOW_ALL_ORIGINS = True  # En développement seulement
+CORS_ALLOW_CREDENTIALS = True
 
 # Configuration CORS supplémentaire
 CORS_ALLOW_METHODS = [
@@ -169,7 +166,4 @@ CORS_ALLOW_HEADERS = [
     "user-agent",
     "x-csrftoken",
     "x-requested-with",
-]
-
-# Autoriser les cookies dans les requêtes cross-origin
-CORS_ALLOW_CREDENTIALS = True 
+] 

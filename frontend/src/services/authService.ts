@@ -83,5 +83,15 @@ export const authService = {
       return { Authorization: `Bearer ${user.access}` };
     }
     return {};
-  }
+  },
+  
+  getUserById: async (id: string) => {
+    try {
+      const response = await api.get(`/users/${id}/`);
+      return response.data;
+    } catch (error) {
+      console.error('Erreur lors de la récupération des détails utilisateur:', error);
+      throw error;
+    }
+  },
 }; 

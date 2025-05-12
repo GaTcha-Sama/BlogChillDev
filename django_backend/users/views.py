@@ -6,6 +6,11 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+class UserListView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny]
+
 class UserCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserCreateSerializer
@@ -16,4 +21,9 @@ class UserDetailView(APIView):
     
     def get(self, request):
         serializer = UserSerializer(request.user)
-        return Response(serializer.data) 
+        return Response(serializer.data)
+
+class UserRetrieveView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny] 
