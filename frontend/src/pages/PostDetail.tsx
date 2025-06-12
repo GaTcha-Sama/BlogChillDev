@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Card, Button, Form, Alert, Badge, Pagination } from 'react-bootstrap';
+import { Container, Card, Button, Form, Alert,  Pagination } from 'react-bootstrap';
 import { postService } from '../services/postService';
 import { authService } from '../services/authService';
 import { Link } from 'react-router-dom';
@@ -19,15 +19,7 @@ export const PostDetail = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  // Map pour convertir les types d'emoji en caractères Unicode
-  const emojiMap = {
-    'like': '👍',
-    'love': '❤️',
-    'laugh': '😂',
-    'wow': '😮',
-    'sad': '😢',
-    'angry': '😡'
-  };
+ 
 
   // Map pour convertir les caractères Unicode en types d'emoji
   const emojiTypeMap = {

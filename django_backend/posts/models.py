@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from .text_correction import TextCorrectionService
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
@@ -9,6 +10,12 @@ class Post(models.Model):
     
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.pk:  
+            correction_service = TextCorrectionService()
+            self.content = correction_service.correct_text(self.content)
+        super().save(*args, **kwargs)
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')

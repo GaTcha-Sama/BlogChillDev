@@ -43,13 +43,9 @@ class PostSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         comments = obj.comments.all().order_by('-created_at')
         
-        # Si on est sur la page d'accueil, on limite à 5 commentaires
-        if request and request.resolver_match.url_name == 'post-list':
-            page = int(request.query_params.get('comment_page', 1))
-            start = (page - 1) * 5
-            end = start + 5
-            comments = list(comments)[start:end]
-            
+        # Si on est sur la page d'accueil (liste), on limite à 10 commentaires
+        if request and request.resolver_match and request.resolver_match.url_name == 'post-list':
+            comments = comments[:10]
         return CommentSerializer(comments, many=True).data
     
     def get_total_comments(self, obj):
